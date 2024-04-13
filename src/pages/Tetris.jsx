@@ -64,8 +64,8 @@ class TetrisBoard {
       this.grid = this.grid.map((cell) => cell + 8);
     } else if (direction === "right") {
       this.grid = this.grid.map((cell) => cell + 1);
-    } else if (direction === "left") {
-      this.grid = this.grid.map((cell) => cell - 1);
+    } else if (direction === "right") {
+      this.grid = this.grid.map((cell) => cell + 1);
     }
   }
 }
