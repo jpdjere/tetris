@@ -29,34 +29,34 @@ const useRepresentionalGrid = (grid) => {
   }, []);
 };
 
-const useGridWithPiece = (grid) => {
-  const newGrid = Array.from(grid);
-  const SHAPES = [
-    [0, 1, 2, 3],
-    [0, 1, 2, 9],
-  ];
-
-  const randomIndex = Math.floor(Math.random() * SHAPES.length);
-  const randomShape = SHAPES[randomIndex];
-  randomShape.forEach((cell) => {
-    newGrid[cell] = { fill: 1, blocked: false };
-  });
-
-  return newGrid;
-};
-
 const handleKeydown = (e) => {
   if (e.key === "ArrowRight") {
+    console.log(e)
+    tetrisBoard.addShape()
   }
 };
 
+const SHAPES = [
+  [0, 1, 2, 3],
+  [0, 1, 2, 9],
+];
 class TetrisBoard {
+
   constructor() {
     this.grid = Array.from({ length: 160 }).fill({ fill: 0, blocked: false });
+    this.addShape()
   }
 
   getGrid() {
     return this.grid;
+  }
+
+  addShape() {
+    const randomIndex = Math.floor(Math.random() * SHAPES.length);
+    const randomShape = SHAPES[randomIndex];
+    randomShape.forEach((cell) => {
+      this.grid[cell] = { fill: 1, blocked: false };
+    });
   }
 
   moveBlocks(direction) {
@@ -73,16 +73,13 @@ class TetrisBoard {
 const tetrisBoard = new TetrisBoard();
 
 export const Tetris = () => {
-  const gridWithPiece = useGridWithPiece(tetrisBoard.getGrid());
+  const gridByRows = useRepresentionalGrid(tetrisBoard.getGrid());
 
-  const gridByRows = useRepresentionalGrid(gridWithPiece);
-
-  console.log(gridWithPiece);
   console.log(gridByRows);
 
   useEffect(() => {
     document.addEventListener("keydown", handleKeydown);
-  });
+  }, []);
 
   return (
     <div>
